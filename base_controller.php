@@ -29,8 +29,25 @@ class hwpMVCBaseController {
   }
 
   public function render($templateName, $templateVars = false) {
-    echo $templateVars;
     return $this->template->render($templateName, $templateVars);
+  }
+  
+  public function renderPage($templateName, $templateVars = false) {
+    echo $this->render('header', hwpMVCWPHelpers::getHeaderData());
+    wp_head();
+    echo $this->render('header_close');
+    echo $this->getSiteTitle();
+    echo $this->render($templateName, $templateVars);
+    wp_footer();
+    echo $this->render('footer');
+  }
+  
+  private function getSiteTitle() {
+    if (is_home()) {
+      return $this->render('site_title_on_home', array('title' => get_bloginfo('name')));
+    } else {
+      return $this->render('site_title', array('title' => get_bloginfo('name')));
+    }
   }
 }
 

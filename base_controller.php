@@ -14,7 +14,7 @@ require_once(dirname(__FILE__).'/lib/mustache/Parser.php');
 require_once(dirname(__FILE__).'/lib/mustache/Template.php');
 require_once(dirname(__FILE__).'/lib/mustache/Tokenizer.php');
 
-class hwpMVCBaseController {
+class ChesterBaseController {
   
   private $template = "";
       
@@ -33,7 +33,7 @@ class hwpMVCBaseController {
   }
   
   public function renderPage($templateName, $templateVars = false) {
-    echo $this->render('header', hwpMVCWPHelpers::getHeaderData());
+    echo $this->render('header', ChesterWPCoreDataHelpers::getHeaderData());
     wp_head();
     echo $this->render('header_close');
     echo $this->getSiteTitle();

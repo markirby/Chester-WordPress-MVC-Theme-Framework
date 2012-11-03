@@ -1,6 +1,6 @@
 <?php
 
-class hwpMVCWPHelpers {
+class ChesterWPCoreDataHelpers {
   
   public static function getHeaderData() {
     return array(

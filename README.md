@@ -143,11 +143,55 @@ All controllers should extend this to inherit the following:
 
 #### render($templateName, $templateVars)
 
+* $templateName - string - name of the template inside the root/mvc/templates folder, without the mustache extension
+* $templateVars - array - array of variables to output in the template
+
+Returns the template
+
+	echo $this->render('template_name', array(
+	  'permalink' => get_permalink(),
+	  'title' => get_the_title(),
+	  'time' => get_the_time($dateFormat),
+	  'content' => self::getTheFilteredContentFromLoop(),
+	));
+
+
 #### renderPage($templateName, $templateVars)
+
+* $templateName - string - name of the template inside the root/mvc/templates folder, without the mustache extension
+* $templateVars - array - array of variables to output in the template
+
+Returns the following:
+
+* root/mvc/templates/header.mustache 
+* wp_head()
+* root/mvc/templates/header_close.mustache 
+* root/mvc/templates/site_title.mustache or, if home page root/mvc/templates/site_title_on_home.mustache
+* The template passed in
+* wp_footer()
+* root/mvc/templates/footer.mustache
+
+	echo $this->render('template_name', array(
+	  'permalink' => get_permalink(),
+	  'title' => get_the_title(),
+	  'time' => get_the_time($dateFormat),
+	  'content' => self::getTheFilteredContentFromLoop(),
+	));
 
 ### ChesterWPCoreDataHelpers - wp_core_data_helpers.php
 
-#### getHeaderData()
-
 #### getWordpressPostsFromLoop($dateFormat = false)
 
+* $dateFormat - string - how you want the date to be shown, as seen in http://codex.wordpress.org/Function_Reference/get_the_time
+
+Runs the WordPress loop and returns the posts in the format:
+
+array(
+	array(
+		'permalink' => ...,
+		'title' => ...,
+    'time' => ...,
+    'content' => ...,
+    'excerpt' => ...
+	),
+)

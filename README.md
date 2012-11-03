@@ -171,6 +171,8 @@ Returns the following:
 * wp_footer()
 * root/mvc/templates/footer.mustache
 
+Example:
+
 	echo $this->render('template_name', array(
 	  'permalink' => get_permalink(),
 	  'title' => get_the_title(),
@@ -186,12 +188,12 @@ Returns the following:
 
 Runs the WordPress loop and returns the posts in the format:
 
-array(
 	array(
-		'permalink' => ...,
-		'title' => ...,
-    'time' => ...,
-    'content' => ...,
-    'excerpt' => ...
-	),
-)
+		array(
+			'permalink' => ...,
+			'title' => ...,
+	    'time' => ...,
+	    'content' => ...,
+	    'excerpt' => ...
+		),
+	)

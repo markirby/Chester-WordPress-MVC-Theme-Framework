@@ -1,8 +1,5 @@
 {
   "name": "Chester WordPress MVC Framework Documentation",
-  "twitter": [
-    "markirby"
-  ],
-	"theme": "v1",
-  "google_analytics": "",
+  "twitter": ["markirby"],
+  "theme": "v1",
 }

@@ -146,7 +146,9 @@ All controllers should extend this to inherit the following:
 * $templateName - string - name of the template inside the root/mvc/templates folder, without the mustache extension
 * $templateVars - array - array of variables to output in the template
 
-Returns the template
+Returns the template.
+
+E.g (called from within a sub-controller):
 
 	echo $this->render('template_name', array(
 	  'permalink' => get_permalink(),
@@ -171,7 +173,7 @@ Returns the following:
 * wp_footer()
 * root/mvc/templates/footer.mustache
 
-Example:
+E.g (called from within a sub-controller):
 
 	echo $this->render('template_name', array(
 	  'permalink' => get_permalink(),
@@ -197,3 +199,12 @@ Runs the WordPress loop and returns the posts in the format:
 	    'excerpt' => ...
 		),
 	)
+
+e.g. (called from within a controller)
+
+	$posts = ChesterWPCoreDataHelpers::getWordpressPostsFromLoop();
+	echo $this->renderPage('post_previews', array(
+	  'posts' => $posts,
+	  'next_posts_link' => get_next_posts_link(),
+	  'previous_posts_link' => get_previous_posts_link()
+	));

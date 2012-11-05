@@ -12,9 +12,9 @@ We provide a data helper file, Chester/wp_core_data_helpers.php to provide acces
 
 Here is an example of how we pull site data into an array for use in a header template.
 
-	public static function getHeaderData() {
+	public static function getBlogInfoData() {
     return array(
-      'title' => self::getTitle(),
+      'title' => self::getBlogTitle(),
       'template_directory' => get_bloginfo('template_directory'),
       'charset' => get_bloginfo('charset'),
       'pingback_url' => get_bloginfo('pingback_url'),
@@ -46,7 +46,7 @@ A controller talks to the data helpers, loads the mustache template and can then
 Here's a sample function from a controller that loads the header data into the header template.
 
 	public function header() {
-	  echo $this->render('header', ChesterWPCoreDataHelpers::getHeaderData());
+	  echo $this->render('header', ChesterWPCoreDataHelpers::getBlogInfoData());
 	}
 	
 ## Install
@@ -59,6 +59,7 @@ Add the following line to functions.php:
 	
 Create a default structure to store your controllers and templates in.
 
+	mkdir mvc
 	mkdir mvc/controllers
 	mkdir mvc/templates
 
@@ -135,19 +136,83 @@ Once these are created, you can call the function renderPage from within your co
 	  'content' => self::getTheFilteredContentFromLoop(),
 	));
 	
-## All available functions
-
-### ChesterBaseController - base_controller.php
+## ChesterBaseController - base_controller.php
 
 All controllers should extend this to inherit the following:
 
-#### render($templateName, $templateVars)
+### render($templateName, $templateVars)
 
-#### renderPage($templateName, $templateVars)
+* $templateName - string - name of the template inside the root/mvc/templates folder, without the mustache extension
+* $templateVars - array - array of variables to output in the template
 
-### ChesterWPCoreDataHelpers - wp_core_data_helpers.php
+Returns the template.
 
-#### getHeaderData()
+E.g (called from within a sub-controller):
 
-#### getWordpressPostsFromLoop($dateFormat = false)
+	echo $this->render('template_name', array(
+	  'permalink' => get_permalink(),
+	  'title' => get_the_title(),
+	  'time' => get_the_time($dateFormat),
+	  'content' => self::getTheFilteredContentFromLoop(),
+	));
 
+
+### renderPage($templateName, $templateVars)
+
+* $templateName - string - name of the template inside the root/mvc/templates folder, without the mustache extension
+* $templateVars - array - array of variables to output in the template
+
+Returns the following:
+
+* root/mvc/templates/header.mustache 
+* wp_head()
+* root/mvc/templates/header_close.mustache 
+* root/mvc/templates/site_title.mustache or, if home page root/mvc/templates/site_title_on_home.mustache
+* The template passed in
+* wp_footer()
+* root/mvc/templates/footer.mustache
+
+E.g (called from within a sub-controller):
+
+	echo $this->render('template_name', array(
+	  'permalink' => get_permalink(),
+	  'title' => get_the_title(),
+	  'time' => get_the_time($dateFormat),
+	  'content' => self::getTheFilteredContentFromLoop(),
+	));
+
+## ChesterWPCoreDataHelpers - wp_core_data_helpers.php
+
+### getBlogInfoData()
+
+Returns an array containing:
+
+* all the variables listed in http://codex.wordpress.org/Function_Reference/bloginfo
+* blog_title - if the helper was called from the homepage this will be the same as 'name', which is the sites name, but if the helper was called from any other page it will return the format "page/post title - site name"
+
+This content is automatically available to your templates/header.mustache file.
+
+### getWordpressPostsFromLoop($dateFormat = false)
+
+* $dateFormat - string - how you want the date to be shown, as seen in http://codex.wordpress.org/Function_Reference/get_the_time
+
+Runs the WordPress loop and returns the posts in the format:
+
+	array(
+		array(
+			'permalink' => ...,
+			'title' => ...,
+	    'time' => ...,
+	    'content' => ...,
+	    'excerpt' => ...
+		),
+	)
+
+e.g. (called from within a controller)
+
+	$posts = ChesterWPCoreDataHelpers::getWordpressPostsFromLoop();
+	echo $this->renderPage('post_previews', array(
+	  'posts' => $posts,
+	  'next_posts_link' => get_next_posts_link(),
+	  'previous_posts_link' => get_previous_posts_link()
+	));

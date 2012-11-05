@@ -33,7 +33,7 @@ class ChesterBaseController {
   }
   
   public function renderPage($templateName, $templateVars = false) {
-    echo $this->render('header', ChesterWPCoreDataHelpers::getHeaderData());
+    echo $this->render('header', ChesterWPCoreDataHelpers::getBlogInfoData());
     wp_head();
     echo $this->render('header_close');
     echo $this->getSiteTitle();
@@ -44,9 +44,9 @@ class ChesterBaseController {
   
   private function getSiteTitle() {
     if (is_home()) {
-      return $this->render('site_title_on_home', array('title' => get_bloginfo('name')));
+      return $this->render('site_title_on_home', array('blog_name' => get_bloginfo('name')));
     } else {
-      return $this->render('site_title', array('title' => get_bloginfo('name')));
+      return $this->render('site_title', array('blog_name' => get_bloginfo('name')));
     }
   }
 }

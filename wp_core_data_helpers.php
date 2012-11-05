@@ -26,7 +26,11 @@ class ChesterWPCoreDataHelpers {
           'title' => get_the_title(),
           'time' => get_the_time($dateFormat),
           'content' => self::getTheFilteredContentFromLoop(),
-          'excerpt' => get_the_excerpt()
+          'excerpt' => get_the_excerpt(),
+          'author' => get_the_author(),
+          'author_link' => get_the_author_link(),
+          'the_tags' => get_the_tags(),
+          'the_category' => get_the_category(),
         );
         array_push($posts, $post);
       }

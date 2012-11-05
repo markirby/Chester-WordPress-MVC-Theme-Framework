@@ -196,17 +196,19 @@ This content is automatically available to your templates/header.mustache file.
 
 * $dateFormat - string - how you want the date to be shown, as seen in http://codex.wordpress.org/Function_Reference/get_the_time
 
-Runs the WordPress loop and returns the posts in the format:
+Runs the WordPress loop and returns an array of arrays, one array per post.
 
-	array(
-		array(
-			'permalink' => ...,
-			'title' => ...,
-	    'time' => ...,
-	    'content' => ...,
-	    'excerpt' => ...
-		),
-	)
+Each post contains the following:
+
+* permalink - posts permalink (http://codex.wordpress.org/Function_Reference/get_permalink)
+* title - posts title (http://codex.wordpress.org/Function_Reference/get_the_title)
+* time - time of the post as set by $dataFormat, or defaults to "Nov 1st, 2012" (http://codex.wordpress.org/Function_Reference/get_the_time)
+* content - the filtered html content of the post, the same as calling http://codex.wordpress.org/Function_Reference/the_content
+* excerpt - the excerpt of the post (http://codex.wordpress.org/Function_Reference/get_the_excerpt)
+* author - the author of the post (http://codex.wordpress.org/Function_Reference/get_the_author)
+* author_link - link to the authors website (http://codex.wordpress.org/Function_Reference/get_the_author_link)
+* the_tags - an array of tag objects for further processing - see (http://codex.wordpress.org/Function_Reference/get_the_tags)
+* the_category - an array of category objects for further processing - see (http://codex.wordpress.org/Function_Reference/get_the_category)
 
 e.g. (called from within a controller)
 
@@ -216,3 +218,8 @@ e.g. (called from within a controller)
 	  'next_posts_link' => get_next_posts_link(),
 	  'previous_posts_link' => get_previous_posts_link()
 	));
+	
+or
+	
+	$posts = ChesterWPCoreDataHelpers::getWordpressPostsFromLoop();
+	echo $posts[0]['permalink'];

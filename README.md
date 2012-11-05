@@ -1,6 +1,8 @@
 # Chester WordPress MVC Theme Framework Documentation
 
-Chester is a lightweight WordPress MVC theming framework for people who want to build their own custom themes with an MVC approach
+Chester is a lightweight WordPress MVC theming framework for people who want to build their own custom themes with an MVC approach.
+
+To learn how to use it, the easiest thing to do is follow the tutorial and download the boilerplate example over at http://markirby.github.com/Boilerplate-Chester-WordPress-Theme/
 
 ## MVC Concepts
 

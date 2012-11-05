@@ -59,6 +59,7 @@ Add the following line to functions.php:
 	
 Create a default structure to store your controllers and templates in.
 
+	mkdir mvc
 	mkdir mvc/controllers
 	mkdir mvc/templates
 

@@ -55,7 +55,7 @@ class ChesterWPCoreDataHelpers {
           'excerpt' => get_the_excerpt(),
           'author' => get_the_author(),
           'author_link' => get_the_author_link(),
-          'the_tags' => self::getArrayOfObjectsAsArrayOfArrays($tags),
+          'the_tags' => self::getTagsAsArray($tags),
           'the_category' => self::getArrayOfObjectsAsArrayOfArrays($categories),
         );
         if (!$tags) {
@@ -88,6 +88,23 @@ class ChesterWPCoreDataHelpers {
     $content = apply_filters('the_content', get_the_content());
     $content = str_replace(']]>', ']]&gt;', $content);
     return $content;
+  }
+  
+  private static function getTagsAsArray($theTags) {
+    if (!$theTags) {
+      return array();
+    }
+    
+    $array = array();
+    
+    foreach ($theTags as $tag) {
+      $tagAsArray = get_object_vars($tag);
+      $tagAsArray['tag_link'] = get_tag_link($tag->term_id);
+      array_push($array, $tagAsArray);
+    }
+
+    return $array;
+    
   }
   
   private static function getArrayOfObjectsAsArrayOfArrays($objects) {

@@ -209,7 +209,7 @@ Each post contains the following:
 * excerpt - the excerpt of the post (http://codex.wordpress.org/Function_Reference/get_the_excerpt)
 * author - the author of the post (http://codex.wordpress.org/Function_Reference/get_the_author)
 * author_link - link to the authors website (http://codex.wordpress.org/Function_Reference/get_the_author_link)
-* the_tags - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_tags)
+* the_tags - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_tags). Also includes 'tag_link', which is a link to the tag view.
 * has_tags - true if tags were found, else false
 * the_category - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_category)
 * has_categories - true if categories found, else false

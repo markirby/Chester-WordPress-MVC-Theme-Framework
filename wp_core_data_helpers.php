@@ -56,7 +56,7 @@ class ChesterWPCoreDataHelpers {
           'author' => get_the_author(),
           'author_link' => get_the_author_link(),
           'the_tags' => self::getTagsAsArray($tags),
-          'the_category' => self::getArrayOfObjectsAsArrayOfArrays($categories),
+          'the_categories' => self::getCategoriesAsArray($categories),
         );
         if (!$tags) {
           $post['has_tags'] = false;
@@ -94,7 +94,6 @@ class ChesterWPCoreDataHelpers {
     if (!$theTags) {
       return array();
     }
-    
     $array = array();
     
     foreach ($theTags as $tag) {
@@ -106,17 +105,17 @@ class ChesterWPCoreDataHelpers {
     return $array;
     
   }
-  
-  private static function getArrayOfObjectsAsArrayOfArrays($objects) {
-    if (!$objects) {
+
+  private static function getCategoriesAsArray($theCategories) {
+    if (!$theCategories) {
       return array();
     }
-    
     $array = array();
     
-    foreach ($objects as $object) {
-      $objectAsArray = get_object_vars($object);
-      array_push($array, $objectAsArray);
+    foreach ($theCategories as $category) {
+      $categoryAsArray = get_object_vars($category);
+      $categoryAsArray['category_link'] = get_category_link($category->term_id);
+      array_push($array, $categoryAsArray);
     }
 
     return $array;

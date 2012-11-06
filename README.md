@@ -211,7 +211,7 @@ Each post contains the following:
 * author_link - link to the authors website (http://codex.wordpress.org/Function_Reference/get_the_author_link)
 * the_tags - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_tags). Also includes 'tag_link', which is a link to the tag view.
 * has_tags - true if tags were found, else false
-* the_category - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_category)
+* the_categories - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_category).  Also includes 'category_link', which is a link to the tag view.
 * has_categories - true if categories found, else false
 
 e.g. (called from within a controller)

@@ -210,7 +210,9 @@ Each post contains the following:
 * author - the author of the post (http://codex.wordpress.org/Function_Reference/get_the_author)
 * author_link - link to the authors website (http://codex.wordpress.org/Function_Reference/get_the_author_link)
 * the_tags - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_tags)
+* has_tags - true if tags were found, else false
 * the_category - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_category)
+* has_categories - true if categories found, else false
 
 e.g. (called from within a controller)
 

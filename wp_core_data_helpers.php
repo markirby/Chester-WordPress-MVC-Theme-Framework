@@ -44,6 +44,9 @@ class ChesterWPCoreDataHelpers {
     if (have_posts()) {
       while (have_posts()) {
         the_post();
+        $tags = get_the_tags();
+        $categories = get_the_category();
+        
         $post = array(
           'permalink' => get_permalink(),
           'title' => get_the_title(),
@@ -52,9 +55,20 @@ class ChesterWPCoreDataHelpers {
           'excerpt' => get_the_excerpt(),
           'author' => get_the_author(),
           'author_link' => get_the_author_link(),
-          'the_tags' => self::getArrayOfObjectsAsArrayOfArrays(get_the_tags()),
-          'the_category' => self::getArrayOfObjectsAsArrayOfArrays(get_the_category()),
+          'the_tags' => self::getArrayOfObjectsAsArrayOfArrays($tags),
+          'the_category' => self::getArrayOfObjectsAsArrayOfArrays($categories),
         );
+        if (!$tags) {
+          $post['has_tags'] = false;
+        } else {
+          $post['has_tags'] = true;
+        }
+        if (!$categories) {
+          $post['has_categories'] = false;
+        } else {
+          $post['has_categories'] = true;
+        }
+        
         array_push($posts, $post);
       }
     }

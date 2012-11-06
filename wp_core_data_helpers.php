@@ -52,8 +52,8 @@ class ChesterWPCoreDataHelpers {
           'excerpt' => get_the_excerpt(),
           'author' => get_the_author(),
           'author_link' => get_the_author_link(),
-          'the_tags' => get_the_tags(),
-          'the_category' => get_the_category(),
+          'the_tags' => self::getArrayOfObjectsAsArrayOfArrays(get_the_tags()),
+          'the_category' => self::getArrayOfObjectsAsArrayOfArrays(get_the_category()),
         );
         array_push($posts, $post);
       }
@@ -75,6 +75,23 @@ class ChesterWPCoreDataHelpers {
     $content = str_replace(']]>', ']]&gt;', $content);
     return $content;
   }
+  
+  private static function getArrayOfObjectsAsArrayOfArrays($objects) {
+    if (!$objects) {
+      return array();
+    }
+    
+    $array = array();
+    
+    foreach ($objects as $object) {
+      $objectAsArray = get_object_vars($object);
+      array_push($array, $objectAsArray);
+    }
+
+    return $array;
+    
+  }
+  
   
 }
 

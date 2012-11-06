@@ -209,8 +209,8 @@ Each post contains the following:
 * excerpt - the excerpt of the post (http://codex.wordpress.org/Function_Reference/get_the_excerpt)
 * author - the author of the post (http://codex.wordpress.org/Function_Reference/get_the_author)
 * author_link - link to the authors website (http://codex.wordpress.org/Function_Reference/get_the_author_link)
-* the_tags - an array of tag objects for further processing - see (http://codex.wordpress.org/Function_Reference/get_the_tags)
-* the_category - an array of category objects for further processing - see (http://codex.wordpress.org/Function_Reference/get_the_category)
+* the_tags - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_tags)
+* the_category - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_category)
 
 e.g. (called from within a controller)
 

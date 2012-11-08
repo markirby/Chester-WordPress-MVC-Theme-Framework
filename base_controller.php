@@ -35,14 +35,15 @@ class ChesterBaseController {
   public function renderPage($templateName, $templateVars = false) {
     echo $this->render('header', ChesterWPCoreDataHelpers::getBlogInfoData());
     wp_head();
-    echo $this->render('header_close');
-    echo $this->getSiteTitle();
+    echo $this->render('header_close', array(
+      'siteTitleHTML' => self::renderSiteTitle()
+    ));
     echo $this->render($templateName, $templateVars);
     wp_footer();
     echo $this->render('footer');
   }
   
-  private function getSiteTitle() {
+  private function renderSiteTitle() {
     if (is_home()) {
       return $this->render('site_title_on_home', array('blog_name' => get_bloginfo('name')));
     } else {

@@ -129,6 +129,8 @@ Create the following templates:
 
 Examples of each can be found in https://github.com/markirby/Boilerplate-Chester-WordPress-Theme
 
+header_close can include the tag {{{siteTitleHTML}}}, which will output the content of site_title on a regular page, and site_title_on_home on the homepage, if you wish, otherwise, leave them both blank.
+
 Once these are created, you can call the function renderPage from within your controller and get the template surrounded by header, footer and site title files, with wp_head() and wp_footer() called.
 
 	echo $this->renderPage('template_name', array(
@@ -169,7 +171,6 @@ Returns the following:
 * root/mvc/templates/header.mustache 
 * wp_head()
 * root/mvc/templates/header_close.mustache 
-* root/mvc/templates/site_title.mustache or, if home page root/mvc/templates/site_title_on_home.mustache
 * The template passed in
 * wp_footer()
 * root/mvc/templates/footer.mustache

@@ -228,3 +228,39 @@ or
 	
 	$posts = ChesterWPCoreDataHelpers::getWordpressPostsFromLoop();
 	echo $posts[0]['permalink'];
+
+## ChesterAdminController - admin_controller.php
+
+The admin controller allows you to instantly create custom post types, with a selection of custom fields available courtesy of [wpalchemy](http://github.com/farinspace/wpalchemy/), which is included in Chester, but not maintained by us.
+
+To use, add the following to your functions.php file:
+
+	$adminSettings = array(
+		'customPostTypes' => array(
+			array(
+				'name' => 'gallery',
+				'displayName' => 'Gallery',
+				'pluralDisplayName' => 'Galleries',
+				'enablePostThumbnailSupport' => true,
+				'fieldBlocks' => array(
+					'blockTitle' => 'Gallery Location',
+					'fields' => array(
+						array(
+							'fieldName' => 'location',
+							'labelTitle' => 'Location',
+							'fieldType' => 'textField',
+						),
+						array(
+							'fieldName' => 'map',
+							'labelTitle' => 'Link to a map',
+							'fieldType' => 'textField',
+						),
+					)
+		    )
+	    )
+	  )
+	);
+
+	$adminController = new ChesterAdminController($adminSettings);
+
+The above example shows you how to add a gallery post type with all the settings you would need to get up and running.

@@ -91,14 +91,18 @@ class ChesterAdminController {
     }
     
     $labels = array(
-      'name' => $pluralDisplayName,
+      'name' => ucfirst($pluralDisplayName),
       'singular_name' => $displayName,
-      'add_new' => 'Add '.$displayName,
-      'add_new_item' => 'Add '.$displayName,
-      'edit_item' => 'Edit '.$displayName,
-      'new_item' => 'New '.$displayName,
-      'view_item' => 'View '.$displayName,
-      'search_items' => 'Search '.$pluralDisplayName,
+      'add_new' => 'Add '.ucfirst($displayName),
+      'all_items' => ucfirst($pluralDisplayName),
+      'add_new_item' => 'Add new '.ucfirst($displayName),
+      'edit_item' => 'Edit '.ucfirst($displayName),
+      'new_item' => 'New '.ucfirst($displayName),
+      'view_item' => 'View '.ucfirst($displayName),
+      'search_items' => 'Search '.ucfirst($pluralDisplayName),
+      'not_found' => 'No '.$pluralDisplayName.' found',
+      'not_found_in_trash' => 'No '.$pluralDisplayName.' found in trash',
+      'menu_name' => ucfirst($pluralDisplayName)
     );
     
     $args = array(
@@ -108,7 +112,7 @@ class ChesterAdminController {
       'supports' => $supports,
       'has_archive' => true,
       'rewrite' => array(
-        'slug' => $displayName
+        'slug' => $pluralDisplayName
     ));
     
     register_post_type($customPostTypeName, $args );  

@@ -45,8 +45,13 @@ class ChesterWPCoreDataHelpers {
     );
   }
     
-  public static function getWordpressPostsFromLoop($dateFormat = false, $customFields = array()) {
+  public static function getWordpressPostsFromLoop($dateFormat = false, $customFields = array(), $fetchAllPosts = false) {
     $posts = array();
+    
+    if (!empty($fetchAllPosts)) {
+      global $query_string;
+      query_posts($query_string . '&posts_per_page=-1&orderby=menu_order');
+    }
     
     if (!$dateFormat) {
       $dateFormat = 'F jS, Y';

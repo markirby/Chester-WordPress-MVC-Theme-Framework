@@ -195,10 +195,11 @@ Returns an array containing:
 
 This content is automatically available to your templates/header.mustache file.
 
-### getWordpressPostsFromLoop($dateFormat = false, $customFields = array())
+### getWordpressPostsFromLoop($dateFormat = false, $customFields = array(), $fetchAllPosts = false)
 
 * $dateFormat - string - how you want the date to be shown, as seen in http://codex.wordpress.org/Function_Reference/get_the_time
 * $customFields - array - array of custom fields you have associated with the post/posts via the ChesterAdminController. E.g. array('map', 'location', 'website')
+* $fetchAllPosts - string - set to true to fetch all posts on the page, in menu order. You can change the menu order using a plugin such as [advanced post types ordering](http://www.nsp-code.com/premium-plugins/wordpress-plugins/advanced-post-types-order/)
 
 Runs the WordPress loop and returns an array of arrays, one array per post.
 

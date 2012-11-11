@@ -10,20 +10,6 @@
  * @link     	http://thisishatch.co.uk/
  */
  
-require_once(dirname(__FILE__).'/lib/mustache/Autoloader.php');
-require_once(dirname(__FILE__).'/lib/mustache/Compiler.php');
-require_once(dirname(__FILE__).'/lib/mustache/Context.php');
-require_once(dirname(__FILE__).'/lib/mustache/Engine.php');
-require_once(dirname(__FILE__).'/lib/mustache/HelperCollection.php');
-require_once(dirname(__FILE__).'/lib/mustache/Loader.php');
-require_once(dirname(__FILE__).'/lib/mustache/Loader/MutableLoader.php');
-require_once(dirname(__FILE__).'/lib/mustache/Loader/ArrayLoader.php');
-require_once(dirname(__FILE__).'/lib/mustache/Loader/FilesystemLoader.php');
-require_once(dirname(__FILE__).'/lib/mustache/Loader/StringLoader.php');
-require_once(dirname(__FILE__).'/lib/mustache/Parser.php');
-require_once(dirname(__FILE__).'/lib/mustache/Template.php');
-require_once(dirname(__FILE__).'/lib/mustache/Tokenizer.php');
-
 class ChesterBaseController {
   
   private $template = "";

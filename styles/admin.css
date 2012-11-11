@@ -1,0 +1,55 @@
+.my_meta_control .description {
+    display: none;
+}
+
+.my_meta_control label {
+    display: block;
+    font-weight: bold;
+    margin: 6px;
+    margin-bottom: 0;
+    margin-top: 12px;
+}
+
+.my_meta_control label span {
+    display: inline;
+    font-weight: normal;
+}
+
+.my_meta_control span {
+    color: #999;
+    display: block;
+}
+
+.my_meta_control textarea, .my_meta_control input[type='text'] {
+    margin-bottom: 3px;
+    width: 99%;
+}
+
+.my_meta_control h4 {
+    color: #999;
+    font-size: 1em;
+    margin: 15px 6px;
+    text-transform: uppercase;
+}
+
+.wpa_group {
+    margin: 20px 0;
+    border-bottom:1px solid #B9B9B9;
+}
+
+.deleteButton {
+    display: block;
+    margin-bottom:20px;
+}
+
+.hidden {
+    display:none;
+}
+
+.mm_checkbox label {
+    display: inline;
+}
+
+.error {
+    color: red;
+}

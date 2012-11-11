@@ -233,34 +233,84 @@ or
 
 The admin controller allows you to instantly create custom post types, with a selection of custom fields available courtesy of [wpalchemy](http://github.com/farinspace/wpalchemy/), which is included in Chester, but not maintained by us.
 
-To use, add the following to your functions.php file:
+To use, create an instance of ChesterAdminController, passing in settings, as shown below:
 
-	$adminSettings = array(
-		'customPostTypes' => array(
+	$galleryLocationBlock = array(
+	  'name' => 'location',
+		'blockTitle' => 'Gallery Location',
+		'fields' => array(
 			array(
-				'name' => 'gallery',
-				'displayName' => 'Gallery',
-				'pluralDisplayName' => 'Galleries',
-				'enablePostThumbnailSupport' => true,
-				'fieldBlocks' => array(
-					'blockTitle' => 'Gallery Location',
-					'fields' => array(
-						array(
-							'fieldName' => 'location',
-							'labelTitle' => 'Location',
-							'fieldType' => 'textField',
-						),
-						array(
-							'fieldName' => 'map',
-							'labelTitle' => 'Link to a map',
-							'fieldType' => 'textField',
-						),
-					)
-		    )
+				'name' => 'location',
+				'labelTitle' => 'Location',
+				'fieldType' => 'textField',
+			),
+			array(
+				'name' => 'map',
+				'labelTitle' => 'Link to a map',
+				'fieldType' => 'textField',
+			)
+		)
+	);
+
+	$galleryInfoBlock = array(
+	  'name' => 'other',
+	  'blockTitle' => 'Other details',
+	  'fields' => array(
+	    array(
+	      'name' => 'website',
+	      'labelTitle' => 'Website address',
+	      'fieldType' => 'textField'
 	    )
 	  )
 	);
 
+	$galleryCustomPostType = array(
+		'name' => 'gallery',
+		'displayName' => 'Gallery',
+		'pluralDisplayName' => 'Galleries',
+		'enablePostThumbnailSupport' => true,
+		'fieldBlocks' => array($galleryLocationBlock, $galleryInfoBlock)
+	);
+
+	$adminSettings = array(
+		'customPostTypes' => array($galleryCustomPostType)
+	);
+
 	$adminController = new ChesterAdminController($adminSettings);
 
-The above example shows you how to add a gallery post type with all the settings you would need to get up and running.
+This example shows you can create a number of blocks, with fields in each, for a custom post type of gallery.
+
+The settings are as follows:
+
+Custom Post
+
+* name - name for the system to call the custom post, this should be unique to your theme
+* displayName - the name to use for displaying the post type in the back end
+* pluralDisplayName - the name to use when describing the post type in plural
+* enablePostThumbnailSupport - set to true to include a featured image box in the admin section for the post type
+* fieldBlocks - an array of field blocks, described below
+
+Field Block
+
+* name - name of the field block, should be unique to this custom post
+* blockTitle - label to appear at the top of the field block
+* fields - array of fields, described below
+
+Field
+
+* name - name of the field, unique to this custom post
+* labelTitle - title of the field, appears above it in the admin section
+* fieldType - type of field to use, at present, only textField is available, this shows a single text field. More to come.
+
+You then need to create a file for each block named [customPostType]_[blockName].php, inside mvc/admin_templates.
+
+For above, you create the files:
+
+* mvc/admin_templates/gallery_location.php
+* mvc/admin_templates/gallery_other.php
+
+Each of these needs to contain the following line of code:
+
+	<?php ChesterWPAlchemyHelpers::showFields($mb); ?>
+
+This is annoying, but a limitation of the WPAlchemy library we use which expects you to stick HTML into a php file. Instead we are bumping the code back into our system which will generate the HTML for you. In future I will address this.

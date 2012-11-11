@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__).'/wp_alchemy_helpers.php');
 
 /**
  * @author   	Mark Kirby
@@ -9,7 +10,6 @@
  * @link     	https://github.com/markirby/Chester-WordPress-MVC-Theme-Framework
  * @link     	http://thisishatch.co.uk/
  */
- 
 class ChesterAdminController {
   
   private $settings;
@@ -17,7 +17,9 @@ class ChesterAdminController {
   public function __construct($settings = false) {
     $this->settings = $settings;
     add_action('init', array($this, 'registerPostTypes'));
+    add_action('init', array($this, 'addMetaBoxes'));
     add_action('after_setup_theme', array($this, 'addThemeSupport'));
+    add_action('admin_enqueue_scripts', array($this, 'addStyles'));
   }
   
   
@@ -45,15 +47,39 @@ class ChesterAdminController {
       } else {
         $pluralDisplayName = $customPost['pluralDisplayName'];
       }
+      
+      $this->registerPostType($name, $displayName, $pluralDisplayName, $supports);
+
     }
     
-    $this->registerPostType($name, $displayName, $pluralDisplayName, $supports);
     
+  }
+  
+  public function addMetaBoxes() {
+    if (!is_admin()) {
+      return;
+    }
+    
+    $customPostTypes = $this->getCustomPostTypesFromSettings();
+    
+    foreach($customPostTypes as $customPostType) {
+      if ( (!isset($customPostType['name'], $customPostType['fieldBlocks'])) || (!is_array($customPostType['fieldBlocks'])) || (count($customPostType['fieldBlocks']) == 0) ) {
+        continue;
+      }
+
+      ChesterWPAlchemyHelpers::setupFieldBlocks($customPostType['name'], $customPostType['fieldBlocks']);
+
+    }
     
   }
   
   public function addThemeSupport() {
     add_theme_support('post-thumbnails', $this->getCustomPostsThatRequirePostThumbnailsSupportFromSettings());
+  }
+    
+  public function addStyles() {
+    wp_register_style('my_meta_css', get_bloginfo('template_url') . '/lib/chester/styles/admin.css');
+    wp_enqueue_style('my_meta_css');
   }
   
   # level 2

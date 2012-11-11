@@ -240,6 +240,17 @@ or
 	$posts = ChesterWPCoreDataHelpers::getWordpressPostsFromLoop();
 	echo $posts[0]['permalink'];
 
+
+### getPosts($dateFormat = false, $postType = 'post', $numberPostsToFetch = -1, $customFields = array())
+
+To get posts outside of the loop to use elsewhere (for example on the home page), use the getPosts function.
+
+* $dateFormat - string - how you want the date to be shown, as seen in http://codex.wordpress.org/Function_Reference/get_the_time
+* $postType - string - post type to fetch
+* $numberPostsToFetch - int/string - number of posts you wish to fetch
+* $customFields - array - array of custom fields you have associated with the post/posts via the ChesterAdminController. E.g. array('map', 'location', 'website')
+
+
 ## ChesterAdminController - admin_controller.php
 
 The admin controller allows you to instantly create custom post types, with a selection of custom fields available courtesy of [wpalchemy](http://github.com/farinspace/wpalchemy/), which is included in Chester, but not maintained by us.

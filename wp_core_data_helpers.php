@@ -53,46 +53,75 @@ class ChesterWPCoreDataHelpers {
       query_posts($query_string . '&posts_per_page=-1&orderby=menu_order');
     }
     
-    if (!$dateFormat) {
-      $dateFormat = 'F jS, Y';
-    }
-    
     if (have_posts()) {
       while (have_posts()) {
         the_post();
-        $tags = get_the_tags();
-        $categories = get_the_category();
-        
-        $post = array(
-          'permalink' => get_permalink(),
-          'title' => get_the_title(),
-          'time' => get_the_time($dateFormat),
-          'content' => self::getTheFilteredContentFromLoop(),
-          'excerpt' => get_the_excerpt(),
-          'author' => get_the_author(),
-          'author_link' => get_the_author_link(),
-          'the_tags' => self::getTagsAsArray($tags),
-          'the_categories' => self::getCategoriesAsArray($categories)
-        );
-        if (!$tags) {
-          $post['has_tags'] = false;
-        } else {
-          $post['has_tags'] = true;
-        }
-        if (!$categories) {
-          $post['has_categories'] = false;
-        } else {
-          $post['has_categories'] = true;
-        }
-        
-        $post = self::addCustomFieldsToPost($customFields, $post);
-        $post = self::addThumbnailsToPost($post);
-        
-        array_push($posts, $post);
+        array_push($posts, self::getPost($dateFormat, $customFields));
       }
     }
     
     return $posts;
+  }
+  
+  public static function getPosts($dateFormat = false, $postType = 'post', $numberPostsToFetch = -1, $customFields = array()) {
+    global $post;
+
+    $posts = array();
+    
+    $querySettings = array(
+      'post_type' => array($postType),
+      'posts_per_page' => $numberPostsToFetch,
+    );
+        
+    $loop = new WP_Query($querySettings);
+    
+    $index = 0;
+    if ($loop->have_posts()) {
+      while ($loop->have_posts()) {
+        $index++;
+        $loop->the_post();
+        array_push($posts, self::getPost($dateFormat, $customFields));
+      }
+    } 
+    
+    return $posts;
+  }
+  
+  private static function getPost($dateFormat = false, $customFields = array()) {
+    
+    if (!$dateFormat) {
+      $dateFormat = 'F jS, Y';
+    }
+    
+    $tags = get_the_tags();
+    $categories = get_the_category();
+    
+    $post = array(
+      'permalink' => get_permalink(),
+      'title' => get_the_title(),
+      'time' => get_the_time($dateFormat),
+      'content' => self::getTheFilteredContentFromLoop(),
+      'excerpt' => get_the_excerpt(),
+      'author' => get_the_author(),
+      'author_link' => get_the_author_link(),
+      'the_tags' => self::getTagsAsArray($tags),
+      'the_categories' => self::getCategoriesAsArray($categories)
+    );
+    if (!$tags) {
+      $post['has_tags'] = false;
+    } else {
+      $post['has_tags'] = true;
+    }
+    if (!$categories) {
+      $post['has_categories'] = false;
+    } else {
+      $post['has_categories'] = true;
+    }
+    
+    $post = self::addCustomFieldsToPost($customFields, $post);
+    $post = self::addThumbnailsToPost($post);
+    
+    return $post;
   }
   
   private static function getBlogTitle() {

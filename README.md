@@ -195,9 +195,10 @@ Returns an array containing:
 
 This content is automatically available to your templates/header.mustache file.
 
-### getWordpressPostsFromLoop($dateFormat = false)
+### getWordpressPostsFromLoop($dateFormat = false, $customFields = array())
 
 * $dateFormat - string - how you want the date to be shown, as seen in http://codex.wordpress.org/Function_Reference/get_the_time
+* $customFields - array - array of custom fields you have associated with the post/posts via the ChesterAdminController. E.g. array('map', 'location', 'website')
 
 Runs the WordPress loop and returns an array of arrays, one array per post.
 
@@ -214,6 +215,15 @@ Each post contains the following:
 * has_tags - true if tags were found, else false
 * the_categories - an array of tag objects which have been converted to associative arrays ready to use in mustache - for a list of available fields see (http://codex.wordpress.org/Function_Reference/get_the_category).  Also includes 'category_link', which is a link to the tag view.
 * has_categories - true if categories found, else false
+
+Then it returns any custom fields, with the same name as you passed in.
+
+Finally it returns featured images (if you set them), as follows:
+
+* featured_image_url_thumbnail
+* featured_image_url_medium
+* featured_image_url_large
+* featured_image_url_full
 
 e.g. (called from within a controller)
 

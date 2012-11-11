@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__).'/wp_alchemy_helpers.php');
 
 /**
  * @author   	Mark Kirby
@@ -43,8 +44,8 @@ class ChesterWPCoreDataHelpers {
       'version' => get_bloginfo('version'),
     );
   }
-  
-  public static function getWordpressPostsFromLoop($dateFormat = false) {
+    
+  public static function getWordpressPostsFromLoop($dateFormat = false, $customFields = array()) {
     $posts = array();
     
     if (!$dateFormat) {
@@ -66,7 +67,7 @@ class ChesterWPCoreDataHelpers {
           'author' => get_the_author(),
           'author_link' => get_the_author_link(),
           'the_tags' => self::getTagsAsArray($tags),
-          'the_categories' => self::getCategoriesAsArray($categories),
+          'the_categories' => self::getCategoriesAsArray($categories)
         );
         if (!$tags) {
           $post['has_tags'] = false;
@@ -78,6 +79,9 @@ class ChesterWPCoreDataHelpers {
         } else {
           $post['has_categories'] = true;
         }
+        
+        $post = self::addCustomFieldsToPost($customFields, $post);
+        $post = self::addThumbnailsToPost($post);
         
         array_push($posts, $post);
       }
@@ -132,7 +136,36 @@ class ChesterWPCoreDataHelpers {
     
   }
   
+  private static function addCustomFieldsToPost($customFields = array(), $post = FALSE) {
+    if (empty($customFields) || empty($post)) {
+      return $post;
+    }
+
+    foreach ($customFields as $customField) {
+      if (empty($customField)) {
+        continue;
+      }
+      
+      $post[$customField] = get_post_meta(get_the_ID(), ChesterWPAlchemyHelpers::$metaKeyPrefix . $customField, true);
+    }
+    
+    return $post;
+    
+  }
   
+  private static function addThumbnailsToPost($post) {
+    $sizes = array('thumbnail', 'medium', 'large', 'full');
+    
+    foreach ($sizes as $size) {
+      $imageObject = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), $size);
+      if (!empty($imageObject)) {
+        $post['featured_image_url_'.$size] = $imageObject[0];
+      }
+    }
+    
+    return $post;
+    
+  }
 }
 
 ?>

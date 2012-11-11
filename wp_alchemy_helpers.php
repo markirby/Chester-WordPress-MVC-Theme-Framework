@@ -13,6 +13,8 @@ require_once(dirname(__FILE__).'/lib/wpalchemy_metaboxes/wpalchemy/MetaBox.php')
 
 class ChesterWPAlchemyHelpers {
   
+  public static $metaKeyPrefix = "_chester_";
+  
   public static function showFields($mb) {
     
     $adminTemplatesFolderLocation = dirname(__FILE__).'/admin_views/';
@@ -89,7 +91,7 @@ class ChesterWPAlchemyHelpers {
       'template' => $adminTemplatesFolderLocation . $customPostType . '_' . $fieldBlockName . '.php',
       'types' => array($customPostType),
       'mode' => WPALCHEMY_MODE_EXTRACT,
-      'prefix' => '_chester_',
+      'prefix' => self::$metaKeyPrefix,
       'fields' => $fields
     );
     

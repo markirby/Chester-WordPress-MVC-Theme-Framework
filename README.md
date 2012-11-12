@@ -250,6 +250,68 @@ To get posts outside of the loop to use elsewhere (for example on the home page)
 * $numberPostsToFetch - int/string - number of posts you wish to fetch
 * $customFields - array - array of custom fields you have associated with the post/posts via the ChesterAdminController. E.g. array('map', 'location', 'website')
 
+## ChesterPatternPrimerController - pattern_primer/pattern_primer_controller.php
+
+The pattern primer controller allows you to create a pattern primer page to show all your different templates in one place. [Read more about the concept](http://adactio.com/journal/5028/), and [view an example](http://patternprimer.adactio.com/). Ours is based on this example.
+
+The boilerplate will take you through setting up a pattern primer. Here are the API docs:
+
+### Loading the controller
+
+	$patternPrimerController = new ChesterPatternPrimerController();
+	
+### showPatternPrimer($patternSets = array(), $patternsHTML = ""
+
+Calling this will automatically include a set of basic content, h1 - h8, blockquote, link, text etc.
+
+* $foldersToConvert - array - an array of folder names within mvc/templates. Each mustache template within these folders will be rendered as is, without any variables being passed in, unless the folder is named 'grids'. In case of folder named 'grids', variables named {{content_block_1}}, {{content_block_2}} up to 8 will be replaced with HTML to produce a grey block in the pattern primer.
+* $patternsHTML - string - remaining HTML to include under the initial folders. Use renderCustomPatternGroup to provide this content.
+
+Returns HTML to be echoed.
+
+### renderCustomPatternGroup($patternsHTML, $patternTitle)
+
+This generates a block of patterns for use in showPatternPrimer().
+
+* $patternsHTML - string - HTML to render within the pattern group, use renderPattern() to generate it.
+* $patternTitle - string - title to display above patterns
+
+Returns HTML to be used in $patternsHTML field of showPatternPrimer().
+
+### renderPattern($templateName, $templateVars = false)
+
+Generates a single pattern.
+
+* $templateName - string - name of the template inside mvc/templates. You can use subfolders, e.g. 'modules/template'.
+* $templateVars - array - array of variables to display for template tags
+
+Returns HTML to be used in $patternsHTML field of renderCustomPatternGroup()
+
+### Example
+
+	$patternPrimerController = new ChesterPatternPrimerController();
+
+	$post = $patternPrimerController->renderPattern('post', array(
+	  'post' => array(
+	    'permalink' => 'http://brightonculture.co.uk',
+	    'title' => 'Post title',
+	    'time' => '12th Nov 2012',
+	    'content' => '<p>Sample content</p>',
+	  )
+	));
+
+	$postPreview = $patternPrimerController->renderPattern('post_previews', array(
+	  'posts' => array(
+	    'permalink' => 'http://brightonculture.co.uk',
+	    'title' => 'Post preview title',
+	    'time' => '12th Nov 2012',
+	    'content' => '<p>Sample content</p>',
+	  )
+	));
+
+	$patternGroup = $patternPrimerController->renderCustomPatternGroup($post . $postPreview, 'modules/');
+
+	$patternPrimerController->showPatternPrimer(array('typography', 'grids'), $patternGroup);
 
 ## ChesterAdminController - admin_controller.php
 

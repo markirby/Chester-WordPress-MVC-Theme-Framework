@@ -16,6 +16,6 @@ require_once(dirname(__FILE__).'/lib/mustache/Tokenizer.php');
 require_once(dirname(__FILE__).'/base_controller.php');
 require_once(dirname(__FILE__).'/admin_controller.php');
 require_once(dirname(__FILE__).'/wp_core_data_helpers.php');
-require_once(dirname(__FILE__).'/pattern_primer_helpers.php');
+require_once(dirname(__FILE__).'/pattern_primer/pattern_primer_controller.php');
 
 ?>

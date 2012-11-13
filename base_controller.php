@@ -45,7 +45,7 @@ class ChesterBaseController {
     return str_replace('//','/',dirname(__FILE__).'/') . '../../mvc/templates'; 
   }
     
-  private function renderSiteTitle() {
+  public function renderSiteTitle() {
     if (is_home()) {
       return $this->render('site_title_on_home', array('blog_name' => get_bloginfo('name')));
     } else {

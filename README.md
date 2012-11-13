@@ -184,6 +184,15 @@ E.g (called from within a sub-controller):
 	  'content' => self::getTheFilteredContentFromLoop(),
 	));
 
+You can override this in a subcontroller if you want, for example, to include navigation on every page with a custom array.
+
+### renderSiteTitle() 
+
+Renders the root/mvc/templates/site_title.mustache if not on home page
+Renders the root/mvc/templates/site_title_home.mustache if on home page
+
+This is good for SEO, allowing you to render the title in an h1 on the homepage and a p elsewhere.
+
 ## ChesterWPCoreDataHelpers - wp_core_data_helpers.php
 
 ### getBlogInfoData()

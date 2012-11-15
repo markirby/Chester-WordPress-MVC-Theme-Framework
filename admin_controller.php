@@ -92,7 +92,7 @@ class ChesterAdminController {
     
     $labels = array(
       'name' => ucfirst($pluralDisplayName),
-      'singular_name' => $displayName,
+      'singular_name' => ucfirst($displayName),
       'add_new' => 'Add '.ucfirst($displayName),
       'all_items' => ucfirst($pluralDisplayName),
       'add_new_item' => 'Add new '.ucfirst($displayName),

@@ -130,6 +130,10 @@ class ChesterAdminController {
       }
     }
     
+    if (!empty($this->settings['thumbnailsInStandardPosts']) && $this->settings['thumbnailsInStandardPosts'] == true) {
+      array_push($customPostsSupportingPostThumbnails, 'post');
+    }
+    
     return $customPostsSupportingPostThumbnails;
     
   }

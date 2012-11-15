@@ -375,6 +375,11 @@ This example shows you can create a number of blocks, with fields in each, for a
 
 The settings are as follows:
 
+General
+
+* customPostTypes - array - array of custom posts, described below
+* thumbnailsInStandardPosts - boolean - set to true to enabled featured image in all standard posts (non custom posts)
+
 Custom Post
 
 * name - name for the system to call the custom post, this should be unique to your theme

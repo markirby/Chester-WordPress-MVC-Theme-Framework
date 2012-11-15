@@ -250,7 +250,7 @@ or
 	echo $posts[0]['permalink'];
 
 
-### getPosts($dateFormat = false, $postType = 'post', $numberPostsToFetch = -1, $customFields = array())
+### getPosts($dateFormat = false, $postType = 'post', $numberPostsToFetch = -1, $customFields = array(), $oddOrEven = false)
 
 To get posts outside of the loop to use elsewhere (for example on the home page), use the getPosts function.
 
@@ -258,6 +258,7 @@ To get posts outside of the loop to use elsewhere (for example on the home page)
 * $postType - string - post type to fetch
 * $numberPostsToFetch - int/string - number of posts you wish to fetch
 * $customFields - array - array of custom fields you have associated with the post/posts via the ChesterAdminController. E.g. array('map', 'location', 'website')
+* $oddOrEven - string - ODD to retrieve only odd posts, EVEN to retrieve only even posts, useful for displaying 2 rows of posts with left to right priority
 
 ## ChesterPatternPrimerController - pattern_primer/pattern_primer_controller.php
 

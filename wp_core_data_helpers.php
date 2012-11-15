@@ -63,7 +63,7 @@ class ChesterWPCoreDataHelpers {
     return $posts;
   }
   
-  public static function getPosts($dateFormat = false, $postType = 'post', $numberPostsToFetch = -1, $customFields = array()) {
+  public static function getPosts($dateFormat = false, $postType = 'post', $numberPostsToFetch = -1, $customFields = array(), $oddOrEven = false) {
     global $post;
 
     $posts = array();
@@ -80,7 +80,11 @@ class ChesterWPCoreDataHelpers {
       while ($loop->have_posts()) {
         $index++;
         $loop->the_post();
-        array_push($posts, self::getPost($dateFormat, $customFields));
+
+        if (!($oddOrEven) || ($oddOrEven == 'EVEN' && $index % 2) || ($oddOrEven == 'ODD' && !($index % 2))) {
+          array_push($posts, self::getPost($dateFormat, $customFields));
+        }
+        
       }
     } 
     

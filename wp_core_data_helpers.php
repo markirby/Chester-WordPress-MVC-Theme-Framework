@@ -132,7 +132,7 @@ class ChesterWPCoreDataHelpers {
     if (is_home()) {
       return get_bloginfo('name');
     } else {
-      return wp_title("-", false, "right") . get_bloginfo('name');
+      return wp_title("-", false, "right");
     }
   }
   

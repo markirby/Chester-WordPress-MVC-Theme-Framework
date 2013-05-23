@@ -257,7 +257,7 @@ To get posts outside of the loop to use elsewhere (for example on the home page)
 * $dateFormat - string - how you want the date to be shown, as seen in http://codex.wordpress.org/Function_Reference/get_the_time
 * $postType - string - post type to fetch
 * $numberPostsToFetch - int/string - number of posts you wish to fetch
-* $customFields - array - array of custom fields you have associated with the post/posts via the ChesterAdminController. E.g. array('map', 'location', 'website')
+* $customFields - array - either an array of custom fields as strings (if you aren't using our admin features), or better - the fields array from your field block (see admin_controller.php below). If you pass the fields array, paragraph tags will be added to your textarea's automatically whenever there is a line break
 * $oddOrEven - string - ODD to retrieve only odd posts, EVEN to retrieve only even posts, useful for displaying 2 rows of posts with left to right priority
 
 ## ChesterPatternPrimerController - pattern_primer/pattern_primer_controller.php

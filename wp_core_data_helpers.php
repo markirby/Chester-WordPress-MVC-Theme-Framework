@@ -183,8 +183,16 @@ class ChesterWPCoreDataHelpers {
       if (empty($customField)) {
         continue;
       }
+      if (is_string($customField)) {
+        $post[$customField] = get_post_meta(get_the_ID(), ChesterWPAlchemyHelpers::$metaKeyPrefix . $customField, true);
+      } else {
+        $name = $customField['name'];
+        $post[$name] = get_post_meta(get_the_ID(), ChesterWPAlchemyHelpers::$metaKeyPrefix . $name, true);
+        if ($customField['fieldType'] == 'textarea') {
+          $post[$name] = wpautop($post[$name]);
+        }
+      }
       
-      $post[$customField] = get_post_meta(get_the_ID(), ChesterWPAlchemyHelpers::$metaKeyPrefix . $customField, true);
     }
     
     return $post;

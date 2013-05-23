@@ -49,6 +49,12 @@ class ChesterAdminController {
         $pluralDisplayName = $customPost['pluralDisplayName'];
       }
       
+      if (!isset($customPost['supports'])) {
+        $supports = NULL;
+      } else {
+        $supports = $customPost['supports'];
+      }
+      
       $this->registerPostType($name, $displayName, $pluralDisplayName, $supports);
 
     }

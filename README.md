@@ -388,6 +388,7 @@ Custom Post
 * pluralDisplayName - the name to use when describing the post type in plural
 * enablePostThumbnailSupport - set to true to include a featured image box in the admin section for the post type
 * fieldBlocks - an array of field blocks, described below
+* supports - set to customize what of the usual posts appear, the default is array('title', 'editor', 'thumbnail', 'tags') so if you don't want any of those you can remove them. This is especially useful if you want to remove the main editor!
 
 Field Block
 

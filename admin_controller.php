@@ -20,6 +20,7 @@ class ChesterAdminController {
     add_action('init', array($this, 'addMetaBoxes'));
     add_action('after_setup_theme', array($this, 'addThemeSupport'));
     add_action('admin_enqueue_scripts', array($this, 'addStyles'));
+    add_action('admin_print_scripts', array($this, 'loadScripts'));    
   }
   
   
@@ -70,6 +71,12 @@ class ChesterAdminController {
       ChesterWPAlchemyHelpers::setupFieldBlocks($customPostType['name'], $customPostType['fieldBlocks']);
 
     }
+    
+  }
+  
+  public function loadScripts() {
+    wp_enqueue_script('jquery.wpImageUpload', get_bloginfo('template_url') . '/lib/chester/js/jquery.wpimageupload.js', array('jquery','media-upload','thickbox'));
+    wp_enqueue_script('my-admin', get_bloginfo('template_url') . '/js/chester/js/admin.js', array('jquery', 'jquery.wpImageUpload'));
     
   }
   

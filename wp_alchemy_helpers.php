@@ -39,6 +39,9 @@ class ChesterWPAlchemyHelpers {
             'theName' => $mb->get_the_name()
           ));
           break;
+        case 'imageUploader':
+          $fieldHtml = self::getImageUploaderHtml($mb, $template);
+          break;
         default:
           $fieldHtml = $template->render('text_field', array(
             'theValue' => $mb->get_the_value(),
@@ -107,5 +110,24 @@ class ChesterWPAlchemyHelpers {
 
   }
   
+  private static function getImageUploaderHtml($mb, $template) {
+    $theName = $mb->get_the_name();
+    $theValue = $mb->get_the_value();
+    
+    $imageUploadText = "Upload";
+    $imageRemoveClass = "hidden";
+    if ($theValue != "") {
+      $imageUploadText = "Reupload";
+      $imageRemoveClass = "";
+    }
+    
+    return $template->render('image_uploader', array(
+      'theValue' => $theValue,
+      'theName' => $theName,
+      'imageInsertFieldContainerClass' => $theName,
+      'imageUploadText' => $imageUploadText,
+      'imageRemoveClass' => $imageRemoveClass
+    ));
+  }
 }
 ?>

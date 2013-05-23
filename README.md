@@ -400,7 +400,7 @@ Field
 
 * name - name of the field, unique to this custom post
 * labelTitle - title of the field, appears above it in the admin section
-* fieldType - type of field to use, textField, textarea, imageUploader (to add custom images)
+* fieldType - type of field to use, textField, textarea (comes with basic wordpress toolbar, you need to put html in here, name must not contain underscores or hyphens), imageUploader (to add custom images)
 
 You then need to create a file for each block named [customPostType]_[blockName].php, inside mvc/admin_templates.
 

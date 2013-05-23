@@ -30,30 +30,39 @@ class ChesterWPAlchemyHelpers {
       if (empty($field['name']) || empty($field['fieldType']) || empty($field['labelTitle'])) {
         continue;
       }
-
       $mb->the_field($field['name']);
-      switch($field['fieldType']) {
-        case 'textarea':
-          $fieldHtml = $template->render('text_area', array(
-            'theValue' => $mb->get_the_value(),
-            'theName' => $mb->get_the_name()
-          ));
-          break;
-        case 'imageUploader':
-          $fieldHtml = self::getImageUploaderHtml($mb, $template);
-          break;
-        default:
-          $fieldHtml = $template->render('text_field', array(
-            'theValue' => $mb->get_the_value(),
-            'theName' => $mb->get_the_name()
-          ));
+      
+      if ($field['fieldType'] == 'textarea') {
+        wp_editor($mb->get_the_value(), $mb->get_the_name(), array(
+            'wpautop' => true, // use wpautop?
+            'media_buttons' => false, // show insert/upload button(s)
+            'textarea_rows' => get_option('default_post_edit_rows', 10), // rows="..."
+            'tabindex' => '',
+            'editor_css' => '', // intended for extra styles for both visual and HTML editors buttons, needs to include the <style> tags, can use "scoped".
+            'editor_class' => '', // add extra class(es) to the editor textarea
+            'teeny' => true, // output the minimal editor config used in Press This
+            'dfw' => false, // replace the default fullscreen with DFW (supported on the front-end in WordPress 3.4)
+            'tinymce' => false, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+            'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
+        ));
+      } else {
+        switch($field['fieldType']) {
+          case 'imageUploader':
+            $fieldHtml = self::getImageUploaderHtml($mb, $template);
+            break;
+          default:
+            $fieldHtml = $template->render('text_field', array(
+              'theValue' => $mb->get_the_value(),
+              'theName' => $mb->get_the_name()
+            ));
+        }
+
+        echo $template->render('field_container', array(
+          'labelText' => $field['labelTitle'],
+          'fieldHTML' => $fieldHtml
+        ));        
       }
-      
-      echo $template->render('field_container', array(
-        'labelText' => $field['labelTitle'],
-        'fieldHTML' => $fieldHtml
-      ));
-      
+
     }
 
     

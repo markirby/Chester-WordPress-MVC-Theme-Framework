@@ -32,15 +32,23 @@ class ChesterWPAlchemyHelpers {
       }
 
       $mb->the_field($field['name']);
-      
-      $textField = $template->render('text_field', array(
-        'theValue' => $mb->get_the_value(),
-        'theName' => $mb->get_the_name()
-      ));
+      switch($field['fieldType']) {
+        case 'textarea':
+          $fieldHtml = $template->render('text_area', array(
+            'theValue' => $mb->get_the_value(),
+            'theName' => $mb->get_the_name()
+          ));
+          break;
+        default:
+          $fieldHtml = $template->render('text_field', array(
+            'theValue' => $mb->get_the_value(),
+            'theName' => $mb->get_the_name()
+          ));
+      }
       
       echo $template->render('field_container', array(
         'labelText' => $field['labelTitle'],
-        'fieldHTML' => $textField
+        'fieldHTML' => $fieldHtml
       ));
       
     }

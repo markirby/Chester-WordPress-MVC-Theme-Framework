@@ -79,11 +79,22 @@ class ChesterAdminController {
 
     }
     
+    $customPages = $this->getCustomPagesFromSettings();
+
+    foreach($customPages as $customPage) {
+      if ( (!isset($customPage['name'], $customPage['fieldBlocks'], $customPage['pageId'])) || (!is_array($customPage['fieldBlocks'])) || (count($customPage['fieldBlocks']) == 0) ) {
+        continue;
+      }
+
+      ChesterWPAlchemyHelpers::setupFieldBlocksForPage($customPage['pageId'], $customPage['name'], $customPage['fieldBlocks']);
+      
+    }
+    
   }
   
   public function loadScripts() {
     wp_enqueue_script('jquery.wpImageUpload', get_bloginfo('template_url') . '/lib/chester/js/jquery.wpimageupload.js', array('jquery','media-upload','thickbox'));
-    wp_enqueue_script('my-admin', get_bloginfo('template_url') . '/js/chester/js/admin.js', array('jquery', 'jquery.wpImageUpload'));
+    wp_enqueue_script('my-admin', get_bloginfo('template_url') . '/lib/chester/js/admin.js', array('jquery', 'jquery.wpImageUpload'));
     
   }
   
@@ -166,6 +177,14 @@ class ChesterAdminController {
       return array();
     } else {
       return $this->settings['customPostTypes'];
+    }
+  }
+  
+  private function getCustomPagesFromSettings() {
+    if (!isset($this->settings) || !isset($this->settings['customPages'])) {
+      return array();
+    } else {
+      return $this->settings['customPages'];
     }
   }
   

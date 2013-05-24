@@ -79,6 +79,20 @@ class ChesterWPAlchemyHelpers {
     }
     
   }
+
+  public static function setupFieldBlocksForPage($pageId, $pageName, $fieldBlocks) {
+    
+    if (empty($pageId)) {
+      die("ChesterWPAlchemyHelpers::setupFieldBlocks missing pageId");
+    }
+    if (empty($pageName)) {
+      die("ChesterWPAlchemyHelpers::setupFieldBlocks missing pageName");
+    }
+    
+    foreach ($fieldBlocks as $fieldBlock) {
+      self::setupFieldBlockForPage($pageId, $pageName, $fieldBlock);
+    }
+  }
   
   private static function setupFieldBlock($customPostType, $fieldBlock) {
     
@@ -104,7 +118,7 @@ class ChesterWPAlchemyHelpers {
     $id = '_chester_' . $customPostType . '_' . $fieldBlockName;
 
     $adminTemplatesFolderLocation = str_replace('//','/',dirname(__FILE__).'/') . '../../mvc/admin_templates/';
-
+      
     $wpAlchemySettings = array(
       'id' => $id,
       'title' => $fieldBlockTitle,
@@ -114,9 +128,49 @@ class ChesterWPAlchemyHelpers {
       'prefix' => self::$metaKeyPrefix,
       'fields' => $fields
     );
-    
+
     $mb = new WPAlchemy_MetaBox($wpAlchemySettings);
 
+  }
+  
+  private static function setupFieldBlockForPage($pageID, $pageName, $fieldBlock) {
+    
+    if (empty($fieldBlock)) {
+      die("ChesterWPAlchemyHelpers::setupFieldBlock missing fieldBlock");
+    }
+    if (empty($fieldBlock['name'])) {
+      die("ChesterWPAlchemyHelpers::setupFieldBlock missing fieldBlock name");
+    } else {
+      $fieldBlockName = $fieldBlock['name'];
+    }
+    if (empty($fieldBlock['blockTitle'])) {
+      $fieldBlockTitle = "Other content:";
+    } else {
+      $fieldBlockTitle = $fieldBlock['blockTitle'];
+    }
+    if (empty($fieldBlock['fields'])) {
+      die("ChesterWPAlchemyHelpers::setupFieldBlock missing fields");
+    } else {
+      $fields = $fieldBlock['fields'];
+    }
+    
+    $id = '_chester_' . $pageName . '_' . $fieldBlockName;
+
+    $adminTemplatesFolderLocation = str_replace('//','/',dirname(__FILE__).'/') . '../../mvc/admin_templates/';
+    
+    $wpAlchemySettings = array(
+      'id' => $id,
+      'title' => $fieldBlockTitle,
+      'template' => $adminTemplatesFolderLocation . $pageName . '_' . $fieldBlockName . '.php',
+      'types' => array('page'),
+      'mode' => WPALCHEMY_MODE_EXTRACT,
+      'prefix' => self::$metaKeyPrefix,
+      'fields' => $fields,
+      'include_post_id' => $pageID,
+      'hide_editor' => TRUE
+    );
+    
+    $mb = new WPAlchemy_MetaBox($wpAlchemySettings);
   }
   
   private static function getImageUploaderHtml($mb, $template) {

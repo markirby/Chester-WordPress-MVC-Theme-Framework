@@ -33,7 +33,7 @@ class ChesterWPAlchemyHelpers {
       $mb->the_field($field['name']);
       
       if ($field['fieldType'] == 'textarea') {
-        wp_editor($mb->get_the_value(), $mb->get_the_name(), array(
+        wp_editor(html_entity_decode($mb->get_the_value()), $mb->get_the_name(), array(
             'wpautop' => true, // use wpautop?
             'media_buttons' => false, // show insert/upload button(s)
             'textarea_rows' => get_option('default_post_edit_rows', 10), // rows="..."

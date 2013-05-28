@@ -21,7 +21,6 @@ class ChesterAdminController {
     add_action('after_setup_theme', array($this, 'addThemeSupport'));
     add_action('admin_enqueue_scripts', array($this, 'addStyles'));
     add_action('admin_print_scripts', array($this, 'loadScripts'));
-    add_action('admin_head', array($this, 'load_tiny_mce')); 
   }
   
   
@@ -96,13 +95,6 @@ class ChesterAdminController {
     wp_enqueue_script('jquery.wpImageUpload', get_bloginfo('template_url') . '/lib/chester/js/jquery.wpimageupload.js', array('jquery','media-upload','thickbox'));
     wp_enqueue_script('my-admin', get_bloginfo('template_url') . '/lib/chester/js/admin.js', array('jquery', 'jquery.wpImageUpload'));
     
-  }
-  
-  public function load_tiny_mce() {
-    wp_tiny_mce(false, array(
-     'mode' => 'specific_textareas',
-     'editor_selector' => 'tinymce-textarea'
-    ));
   }
   
   public function addThemeSupport() {

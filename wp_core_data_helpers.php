@@ -91,6 +91,17 @@ class ChesterWPCoreDataHelpers {
     return $posts;
   }
   
+  public static function getPageCustomFields($id, $customFields) {
+    $post = array();
+    
+    foreach ($customFields as $customField) {
+      $post = self::setCustomFieldOnPost($id, $customField, $post);
+    }
+    
+    return $post;
+  }
+  
+  
   private static function getPost($dateFormat = false, $customFields = array()) {
     
     if (!$dateFormat) {
@@ -127,7 +138,7 @@ class ChesterWPCoreDataHelpers {
     
     return $post;
   }
-  
+    
   private static function getBlogTitle() {
     if (is_home()) {
       return get_bloginfo('name');
@@ -183,20 +194,24 @@ class ChesterWPCoreDataHelpers {
       if (empty($customField)) {
         continue;
       }
-      if (is_string($customField)) {
-        $post[$customField] = get_post_meta(get_the_ID(), ChesterWPAlchemyHelpers::$metaKeyPrefix . $customField, true);
-      } else {
-        $name = $customField['name'];
-        $post[$name] = get_post_meta(get_the_ID(), ChesterWPAlchemyHelpers::$metaKeyPrefix . $name, true);
-        if ($customField['fieldType'] == 'textarea') {
-          $post[$name] = wpautop($post[$name]);
-        }
-      }
-      
+      $post = self::setCustomFieldOnPost(get_the_ID(), $customField, $post);
     }
     
     return $post;
     
+  }
+  
+  private static function setCustomFieldOnPost($postId, $customField, $post) {
+    if (is_string($customField)) {
+      $post[$customField] = get_post_meta($postId, ChesterWPAlchemyHelpers::$metaKeyPrefix . $customField, true);
+    } else {
+      $name = $customField['name'];
+      $post[$name] = get_post_meta($postId, ChesterWPAlchemyHelpers::$metaKeyPrefix . $name, true);
+      if ($customField['fieldType'] == 'textarea') {
+        $post[$name] = wpautop($post[$name]);
+      }
+    }
+    return $post;
   }
   
   private static function addThumbnailsToPost($post) {

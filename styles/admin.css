@@ -53,3 +53,7 @@
 .error {
     color: red;
 }
+
+#TB_window {
+  margin-left: 0!important;
+}

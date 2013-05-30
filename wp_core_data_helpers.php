@@ -42,6 +42,8 @@ class ChesterWPCoreDataHelpers {
       'language' => get_bloginfo('language'),
       'text_direction' => get_bloginfo('text_direction'),
       'version' => get_bloginfo('version'),
+      
+      'is_user_logged_in' => is_user_logged_in()
     );
   }
     

@@ -85,7 +85,7 @@ class ChesterPatternPrimerController{
   }
   
   private function renderPatterns($patternSets = array()) {
-
+    $patterns = "";
     foreach ($patternSets as $patternSet) {
       if ( (empty($patternSet['pathToTemplates'])) || (empty($patternSet['patternsTemplateLoader'])) || (empty($patternSet['patternFolder'])) ) {
         continue;

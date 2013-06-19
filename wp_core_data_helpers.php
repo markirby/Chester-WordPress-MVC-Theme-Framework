@@ -107,7 +107,7 @@ class ChesterWPCoreDataHelpers {
   private static function getPost($dateFormat = false, $customFields = array()) {
     
     if (!$dateFormat) {
-      $dateFormat = 'F jS, Y';
+      $dateFormat = get_option('date_format');
     }
     
     $tags = get_the_tags();

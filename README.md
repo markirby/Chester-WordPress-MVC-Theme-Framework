@@ -14,14 +14,16 @@ We provide a data helper file, Chester/wp_core_data_helpers.php to provide acces
 
 Here is an example of how we pull site data into an array for use in a header template.
 
-	public static function getBlogInfoData() {
+```php
+public static function getBlogInfoData() {
     return array(
-      'title' => self::getBlogTitle(),
-      'template_directory' => get_bloginfo('template_directory'),
-      'charset' => get_bloginfo('charset'),
-      'pingback_url' => get_bloginfo('pingback_url'),
+        'title' => self::getBlogTitle(),
+        'template_directory' => get_bloginfo('template_directory'),
+        'charset' => get_bloginfo('charset'),
+        'pingback_url' => get_bloginfo('pingback_url'),
     );
-  }
+}
+```
 
 
 ### Views based on Mustache templates
@@ -30,15 +32,18 @@ You create views using [Mustache](http://mustache.github.com/).
 
 Here is an example of a header template that displays the above data.
 
-	<!DOCTYPE html>
-	  <head>
-	    <title>{{{title}}}</title>
-
-	    <link rel="shortcut icon" href="{{template_directory}}/favicon.ico" />
-
-	    <meta charset="{{charset}}" />
-      <link rel="stylesheet" href="{{template_directory}}/css/global.css">
-	    <link rel="pingback" href="{{pingback_url}}" />
+```html
+<!DOCTYPE html>
+  <head>
+    <title>{{{title}}}</title>
+    
+    <link rel="shortcut icon" href="{{template_directory}}/favicon.ico" />
+	
+    <meta charset="{{charset}}" />
+    
+    <link rel="stylesheet" href="{{template_directory}}/css/global.css">
+    <link rel="pingback" href="{{pingback_url}}" />
+```
 
 
 ### Controllers to pull everything together
@@ -47,9 +52,11 @@ A controller talks to the data helpers, loads the mustache template and can then
 
 Here's a sample function from a controller that loads the header data into the header template.
 
-	public function header() {
-	  echo $this->render('header', ChesterWPCoreDataHelpers::getBlogInfoData());
-	}
+```php
+public function header() {
+    echo $this->render('header', ChesterWPCoreDataHelpers::getBlogInfoData());
+}
+```
 	
 ## Install
 
@@ -57,13 +64,17 @@ Install Chester into lib/Chester
 
 Add the following line to functions.php:
 
-	require_once(dirname(__FILE__).'/lib/chester/require.php');
+```php
+require_once(dirname(__FILE__).'/lib/chester/require.php');
+```
 	
 Create a default structure to store your controllers and templates in.
 
-	mkdir mvc
-	mkdir mvc/controllers
-	mkdir mvc/templates
+```shell
+mkdir mvc
+mkdir mvc/controllers
+mkdir mvc/templates
+```
 
 ## Creating basic controllers and views
 
@@ -71,13 +82,15 @@ Create a default structure to store your controllers and templates in.
 
 Controllers should extend ChesterBaseController. This then provides access to the templating functions. 
 
-	class PageController extends ChesterBaseController {
-		
-		public function showPage() {
-			...
-		}
-		
-	}
+```php
+class PageController extends ChesterBaseController {
+
+    public function showPage() {
+        ...
+    }
+
+}
+```
 
 You could group functions in a single controller, or create separate controllers for each template type. We favour the later.
 
@@ -89,10 +102,12 @@ Place controllers inside mvc/controllers.
 
 Require the controller, init it and call the relevant function.
 
-	require_once(dirname(__FILE__).'/mvc/controllers/page_controller.php');
+```php
+require_once(dirname(__FILE__).'/mvc/controllers/page_controller.php');
 
-	$siteController = new PageController();
-	$siteController->showPage();
+$siteController = new PageController();
+$siteController->showPage();
+```    
 
 ### Creating mustache templates
 
@@ -102,20 +117,24 @@ Create your mustache template within mvc/templates.
 
 Here is an example template showing a post:
 
-	<h1><a href="{{permalink}}">{{{title}}}</a></h1>
-	<p>{{time}}</p>
-	{{{content}}}
+```html
+<h1><a href="{{permalink}}">{{{title}}}</a></h1>
+<p>{{time}}</p>
+{{{content}}}
+```
 
 ### Loading a template from within a controller
 
 To load the above template, you can use the built in function render from within your controller.
-	
-	echo $this->render('template_name', array(
+
+```php	
+echo $this->render('template_name', array(
     'permalink' => get_permalink(),
     'title' => get_the_title(),
     'time' => get_the_time($dateFormat),
     'content' => self::getTheFilteredContentFromLoop(),
-	));
+));
+```
 
 ### Loading templates with automatically included Header and footer feature
 
@@ -129,16 +148,18 @@ Create the following templates:
 
 Examples of each can be found in https://github.com/markirby/Boilerplate-Chester-WordPress-Theme
 
-header_close can include the tag {{{siteTitleHTML}}}, which will output the content of site_title on a regular page, and site_title_on_home on the homepage, if you wish, otherwise, leave them both blank.
+`header_close` can include the tag `{{{siteTitleHTML}}}`, which will output the content of `site_title` on a regular page, and `site_title_on_home` on the homepage, if you wish. Otherwise, leave them both blank.
 
-Once these are created, you can call the function renderPage from within your controller and get the template surrounded by header, footer and site title files, with wp_head() and wp_footer() called.
+Once these are created, you can call the function `renderPage` from within your controller and get the template surrounded by header, footer and site title files, with `wp_head()` and `wp_footer()` called.
 
-	echo $this->renderPage('template_name', array(
-	  'permalink' => get_permalink(),
-	  'title' => get_the_title(),
-	  'time' => get_the_time($dateFormat),
-	  'content' => self::getTheFilteredContentFromLoop(),
-	));
+```php
+echo $this->renderPage('template_name', array(
+    'permalink' => get_permalink(),
+    'title' => get_the_title(),
+    'time' => get_the_time($dateFormat),
+    'content' => self::getTheFilteredContentFromLoop(),
+));
+```
 	
 ## ChesterBaseController - base_controller.php
 
@@ -146,25 +167,27 @@ All controllers should extend this to inherit the following:
 
 ### render($templateName, $templateVars)
 
-* $templateName - string - name of the template inside the root/mvc/templates folder, without the mustache extension
-* $templateVars - array - array of variables to output in the template
+* `$templateName` - string - name of the template inside the root/mvc/templates folder, without the mustache extension
+* `$templateVars` - array - array of variables to output in the template
 
 Returns the template.
 
 E.g (called from within a sub-controller):
 
-	echo $this->render('template_name', array(
-	  'permalink' => get_permalink(),
-	  'title' => get_the_title(),
-	  'time' => get_the_time($dateFormat),
-	  'content' => self::getTheFilteredContentFromLoop(),
-	));
+```php
+echo $this->render('template_name', array(
+    'permalink' => get_permalink(),
+    'title' => get_the_title(),
+    'time' => get_the_time($dateFormat),
+    'content' => self::getTheFilteredContentFromLoop(),
+));
+```
 
 
 ### renderPage($templateName, $templateVars)
 
-* $templateName - string - name of the template inside the root/mvc/templates folder, without the mustache extension
-* $templateVars - array - array of variables to output in the template
+* `$templateName` - string - name of the template inside the root/mvc/templates folder, without the mustache extension
+* `$templateVars` - array - array of variables to output in the template
 
 Returns the following:
 

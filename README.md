@@ -60,7 +60,7 @@ public function header() {
 	
 ## Install
 
-Install Chester into lib/Chester
+   Install Chester into lib/Chester
 
 Add the following line to functions.php:
 
@@ -434,6 +434,6 @@ For above, you create the files:
 
 Each of these needs to contain the following line of code:
 
-	<?php ChesterWPAlchemyHelpers::showFields($mb); ?>
+<?php ChesterWPAlchemyHelpers::showFields($mb); ?>
 
 This is annoying, but a limitation of the WPAlchemy library we use which expects you to stick HTML into a php file. Instead we are bumping the code back into our system which will generate the HTML for you. In future I will address this.

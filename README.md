@@ -60,7 +60,7 @@ public function header() {
 	
 ## Install
 
-Install Chester into lib/Chester
+   Install Chester into lib/Chester
 
 Add the following line to functions.php:
 
